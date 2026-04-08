@@ -46,8 +46,8 @@ Siga os passos abaixo para testar este projeto no seu ambiente.
 Abra seu terminal e execute:
 
 ```bash
-git clone https://github.com/joaootaviororiz/sua-url-aqui.git
-cd sua-url-aqui
+git clone https://github.com/joaootaviororiz/automation-portfolio.git
+cd automation-portfolio
 pip install -r requirements.txt
 ```
 
