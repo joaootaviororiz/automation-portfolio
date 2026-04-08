@@ -1,0 +1,40 @@
+# 🔐 Arquivos sensíveis
+.env
+.env.
+credenciais_de_servico.json
+*.key
+*.pem
+
+# 🐍 Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# 📦 Ambientes virtuais
+venv/
+.env/
+.venv/
+
+# 📝 Logs
+logs/
+*.log
+
+# 🖥️ Sistema operacional
+.DS_Store
+Thumbs.db
+
+# 🧪 IDEs / Editores
+.vscode/
+.idea/
+dev/
+*credenciais_de_servico.json
+
+# 📊 Arquivos temporários
+*.csv
+*.xlsx
+*.tmp
+
+# 🔥 Jupyter Notebook checkpoints
+.ipynb_checkpoints/

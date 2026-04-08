@@ -1,0 +1,7 @@
+pandas
+fdb
+gspread
+gspread-dataframe
+oauth2client
+python-dotenv
+python-dateutil
