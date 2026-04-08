@@ -21,6 +21,13 @@ Pipeline de dados automatizado que extrai informações de banco Firebird, trans
 - Automação com scripts
 
 ---
+![Dashboard](etl-automation-portfolio\images\dashboardvendas.png)
+
+
+![Estoque sheets](etl-automation-portfolio\images\estoqueprodutos.png)
+
+![Produtos sheets](etl-automation-portfolio\images\produtosinteligencia.png)
+---
 
 ## 🔐 Segurança
 
