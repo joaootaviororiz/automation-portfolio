@@ -912,60 +912,38 @@ def recalcular_colunas_temporais(df):
 def atualizar_financeiro_titulos(backfill=True):
     app_log.info("Atualizando Financeiro_Titulos...")
 
-    df_novo = gerar_financeiro_titulos()
-    if df_novo.empty:
-        app_log.info("Sem dados novos.")
+    df = gerar_financeiro_titulos()
+    if df.empty:
+        app_log.info("Sem dados.")
         return
-    
-    if backfill:
-        app_log.info("[BACKFILL] - Rodando BACKFILL financeiro (dados históricos)...")
-        df_final = df_novo.copy()
-    else:
-        app_log.info("Atualização incremental financeira...")
-        df_sheets = gerar_financeiro_titulos()
-        df_final = df_sheets.copy()
-        df_final.update(df_novo)
-        novos = df_novo[~df_novo["IDLAN"].isin(df_sheets["IDLAN"])]
-        df_final = pd.concat([df_final, novos], ignore_index=True)
 
-    df_novo = tratar_financeiro(df_novo)
-    
-    
+    df = tratar_financeiro(df)
+    df = recalcular_colunas_temporais(df)
+
     client = autenticar_sheets()
     sh = client.open_by_key(PLANILHA_ID)
 
     try:
         aba = sh.worksheet("Financeiro_Titulos")
-        df_sheets = get_as_dataframe(aba)
-
-        if not df_sheets.empty:
-            df_final = merge_incremental(df_novo, df_sheets)
-        else:
-            df_final = df_novo
-
     except Exception:
         aba = sh.add_worksheet(title="Financeiro_Titulos", rows=2000, cols=40)
-        df_final = df_novo
 
+    app_log.info(f"Limpando aba Financeiro_Titulos... Registros atuais: {len(df)}")
 
-    df_final = recalcular_colunas_temporais(df_final)
-    
-    app_log.info(
-        f"Nulos: {df_final['DATAVENCIMENTO'].isna().sum()}, Vazios: {df_final['DATAVENCIMENTO'].eq('').sum()}"
-    )
+    aba.clear()
+
+    app_log.info("Aba Financeiro_Titulos limpa. Inserindo novos dados...")
 
     set_with_dataframe(
         aba,
-        df_final,
+        df,
         row=1,
         col=1,
         include_index=False,
         resize=True
     )
 
-    app_log.info(f"Financeiro_Titulos atualizado: {len(df_final)} registros.")
-
-
+    app_log.info(f"Financeiro_Titulos atualizado: {len(df)} registros.")
 
 
 
